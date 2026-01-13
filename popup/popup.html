@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Text</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="controls">
+      <input id="textInput" placeholder="Add New Text"></input>
+      <button id="addButton">+</button>
+    </div>
+    <div id="textList"></div>
+    <template id="text-row-template">
+      <div class="text-item ">
+        <input type="hidden" class="id" value="">
+        <span class="text"></span><button class="delete-button">-</button>
+      </div>
+    </template>
+
+    <script src="../shared/SavedText.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
