@@ -32,13 +32,37 @@ class SavedText {
   }
 
   /**
+   * Add the instance to the storage.
+   */
+  async add() {
+    // Append the instance to the current saved texts from storage
+    const savedTexts = await SavedText.load();
+    savedTexts.push(this);
+
+    // Save change to the storage
+    SavedText.#save(savedTexts);
+  }
+
+  /**
+   * Delete the instance from the storage.
+   */
+  async delete() {
+    // Filter out the current saved texts by this instance id
+    let savedTexts = await SavedText.load();
+    savedTexts = savedTexts.filter((t) => t.id !== this.id);
+
+    // Save change to the storage
+    SavedText.#save(savedTexts);
+  }
+
+  /**
    * Create instance from plain object.
    *
    * @param {Object} object - data object
    * @returns {SavedText} class instance
    */
   static fromJSON(obj) {
-    return new SavedText((text = obj.text), (id = obj.id));
+    return new SavedText(obj.text, obj.id);
   }
 
   /**
@@ -70,7 +94,7 @@ class SavedText {
    *
    * @param {SavedText[]} savedTexts - array of SavedText instances
    */
-  static async save(savedTexts) {
+  static async #save(savedTexts) {
     await chrome.storage.sync.set({
       [this.STORAGE_KEY]: savedTexts.map((t) => t.toJSON()),
     });

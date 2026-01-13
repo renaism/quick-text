@@ -1,8 +1,6 @@
 let textInput, addButton, textList;
 let textRowTemplate;
 
-const savedTexts = [];
-
 document.addEventListener("DOMContentLoaded", () => {
   textInput = document.getElementById("textInput");
   addButton = document.getElementById("addButton");
@@ -10,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   textRowTemplate = document.getElementById("text-row-template");
 
-  populateTextList([]);
+  populateTextList();
   addButton.addEventListener("click", () => {
     addText(textInput.value);
   });
@@ -19,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Populate the textList container with texts from savedTexts.
  */
-function populateTextList() {
-  // const savedTexts = await SavedText.load();
+async function populateTextList() {
+  const savedTexts = await SavedText.load();
   textList.replaceChildren();
 
   savedTexts.forEach((t) => {
@@ -36,7 +34,7 @@ function populateTextList() {
       removeText(t.id);
     });
 
-    textList.appendChild(textRow);
+    textList.prepend(textRow);
   });
 }
 
@@ -54,8 +52,11 @@ async function addText(text) {
   // Empty text input
   textInput.value = "";
 
-  // const savedTexts = await SavedText.load();
-  savedTexts.push(new SavedText(text));
+  // Create and save new saved text
+  const savedText = new SavedText(text);
+  await savedText.add();
+
+  // Re-populate text list
   populateTextList();
 }
 
@@ -65,6 +66,13 @@ async function addText(text) {
  * @param {string} id
  */
 async function removeText(id) {
-  console.log(`remove: ${id}`);
+  // Get saved text by id
+  const savedTexts = await SavedText.load();
+  const savedText = savedTexts.find((t) => t.id === id);
+
+  // Delete saved text
+  await savedText.delete();
+
+  // Re-populate text list
   populateTextList();
 }
