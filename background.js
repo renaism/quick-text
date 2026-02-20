@@ -51,3 +51,29 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     populateContextMenus();
   }
 });
+
+// Handle context menus clicks
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  // Ignore invalid menu id or tab
+  if (!info.menuItemId || typeof info.menuItemId !== "string") return;
+  if (!info.menuItemId.startsWith(MENU_PREFIX)) return;
+  if (!tab || !tab.id) return;
+
+  // Ignore empty placeholder
+  if (info.menuItemId === `${MENU_PREFIX}-empty`) return;
+
+  // Get saved text id from menu id
+  const id = info.menuItemId.slice(MENU_PREFIX.length + 1);
+  if (id === "") return;
+
+  // Get the saved text value
+  const savedTexts = await SavedText.load();
+  const savedText = savedTexts.find((t) => t.id === id);
+  if (!savedText) return;
+
+  // Send message to the active tab
+  chrome.tabs.sendMessage(tab.id, {
+    action: "insertText",
+    text: savedText.text,
+  });
+});
