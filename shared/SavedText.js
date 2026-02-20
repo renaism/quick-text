@@ -100,3 +100,5 @@ class SavedText {
     });
   }
 }
+
+export default SavedText;

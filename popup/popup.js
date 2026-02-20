@@ -1,3 +1,5 @@
+import SavedText from "../shared/SavedText.js";
+
 let textInput, addButton, textList;
 let textRowTemplate;
 
