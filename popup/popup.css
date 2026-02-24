@@ -13,42 +13,56 @@ body {
     sans-serif;
   background-color: #f5f5f5;
   color: #333;
-  width: 350px;
+  width: 450px;
   padding: 15px;
   margin: 0;
 }
 
-#textInput {
-  width: 100%;
-  margin-right: 10px;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
 .controls {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 10px;
+  align-items: flex-end;
   margin-bottom: 20px;
 }
 
-#addButton {
-  padding: 8px 15px;
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.input-group input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   font-size: 14px;
-  font-weight: bold;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+#addButton {
+  padding: 8px 0;
+  margin: 0;
+  font-size: 14px;
   color: #fff;
   background-color: #007bff;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 #addButton:hover {
-  background-color: #999;
+  background-color: #56a7ff;
 }
 
 #textList {
@@ -76,7 +90,15 @@ body {
 
 .text-item span {
   white-space: pre-wrap;
-  word-break: break-word;
+}
+
+.text-item .name {
+  font-weight: bold;
+}
+
+.text-item .text {
+  flex-grow: 1;
+  white-space: pre-wrap;
   margin-right: 10px;
 }
 

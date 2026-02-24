@@ -5,8 +5,9 @@ class SavedText {
    * @param {string} id
    * @param {string} text
    */
-  constructor(text, id = null) {
+  constructor(name, text, id = null) {
     this.id = id || this.generateId();
+    this.name = name;
     this.text = text;
   }
 
@@ -27,6 +28,7 @@ class SavedText {
   toJSON() {
     return {
       id: this.id,
+      name: this.name,
       text: this.text,
     };
   }
@@ -62,7 +64,7 @@ class SavedText {
    * @returns {SavedText} class instance
    */
   static fromJSON(obj) {
-    return new SavedText(obj.text, obj.id);
+    return new SavedText(obj.name, obj.text, obj.id);
   }
 
   /**

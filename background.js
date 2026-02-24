@@ -32,7 +32,7 @@ async function populateContextMenus() {
     chrome.contextMenus.create({
       id: `${MENU_PREFIX}-${t.id}`,
       parentId: `${MENU_PREFIX}-root`,
-      title: t.text,
+      title: (t.name ? `${t.name}: ` : "") + t.text,
       contexts: ["editable"],
     });
   });

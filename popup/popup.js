@@ -4,6 +4,7 @@ let textInput, addButton, textList;
 let textRowTemplate;
 
 document.addEventListener("DOMContentLoaded", () => {
+  nameInput = document.getElementById("nameInput");
   textInput = document.getElementById("textInput");
   addButton = document.getElementById("addButton");
   textList = document.getElementById("textList");
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   populateTextList();
   addButton.addEventListener("click", () => {
-    addText(textInput.value);
+    addText(nameInput.value, textInput.value);
   });
 });
 
@@ -31,6 +32,11 @@ async function populateTextList() {
     textRow.querySelector(".id").value = t.id;
     textRow.querySelector(".text").textContent = t.text;
 
+    // Set name if not empty
+    if (t.name) {
+      textRow.querySelector(".name").textContent = `${t.name} `;
+    }
+
     // Add event listener to the delete button
     textRow.querySelector(".delete-button").addEventListener("click", () => {
       removeText(t.id);
@@ -43,19 +49,21 @@ async function populateTextList() {
 /**
  * Add new text to list and storage.
  *
+ * @param {string} name
  * @param {string} text
  */
-async function addText(text) {
+async function addText(name, text) {
   // Don't do anything if text input is empty
   if (!text) {
     return;
   }
 
-  // Empty text input
+  // Empty input fields
+  nameInput.value = "";
   textInput.value = "";
 
   // Create and save new saved text
-  const savedText = new SavedText(text);
+  const savedText = new SavedText(name, text);
   await savedText.add();
 
   // Re-populate text list

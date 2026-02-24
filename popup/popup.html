@@ -8,14 +8,25 @@
   </head>
   <body>
     <div class="controls">
-      <input id="textInput" placeholder="Add New Text"></input>
-      <button id="addButton">+</button>
+      <div class="input-group" style="width: 120px">
+        <label for="nameInput">Name</label>
+        <input id="nameInput" name="name" placeholder="Optional" />
+      </div>
+      <div class="input-group" style="flex-grow: 1">
+        <label for="textInput">Text</label>
+        <input id="textInput" name="text" placeholder="" />
+      </div>
+      <div class="input-group" style="width: 50px">
+        <button id="addButton">Add</button>
+      </div>
     </div>
     <div id="textList"></div>
     <template id="text-row-template">
-      <div class="text-item ">
-        <input type="hidden" class="id" value="">
-        <span class="text"></span><button class="delete-button">-</button>
+      <div class="text-item">
+        <input type="hidden" class="id" value="" />
+        <span class="name"></span>
+        <span class="text"></span>
+        <button class="delete-button">-</button>
       </div>
     </template>
 
